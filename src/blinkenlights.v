@@ -23,7 +23,7 @@ wire enable;
 assign enable = (delay_counter == 25'd24999999) ? 1'b1 : 1'b0;
     // increment or reset the counter
     always @(posedge clk or negedge rst_n)
-    if (rst)
+    if (rst_n)
     begin
     delay_counter <= 25'd0;
     rCounter <= 8'b0;
