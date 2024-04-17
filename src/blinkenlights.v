@@ -15,6 +15,9 @@ module tt_um_blink(
     reg [7:0] rCounter;
 //a register for the delay counter 
 reg [24:0] delay_counter;
+
+	
+wire enable;
      
 //the delay  counter 
 assign enable = (delay_counter == 25'd24999999) ? 1'b1 : 1'b0;
