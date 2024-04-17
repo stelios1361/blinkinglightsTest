@@ -16,14 +16,15 @@ module tt_um_blink(
 //a register for the delay counter 
 reg [24:0] delay_counter;
 
-	
 wire enable;
+wire rst;
+assign rst = !rst_n;
      
 //the delay  counter 
 assign enable = (delay_counter == 25'd24999999) ? 1'b1 : 1'b0;
     // increment or reset the counter
-    always @(posedge clk or negedge rst_n)
-    if (rst_n)
+    always @(posedge clk or posedge rst)
+    if (rst)
     begin
     delay_counter <= 25'd0;
     rCounter <= 8'b0;
@@ -39,7 +40,7 @@ assign enable = (delay_counter == 25'd24999999) ? 1'b1 : 1'b0;
 	end
  
   // All output pins must be assigned. If not used, assign to 0.
-  assign uo_out  = rCounter; 
+  assign uo_out  = rCounter 
   assign uio_out = 0;
   assign uio_oe  = 0;
 
