@@ -10,6 +10,7 @@ module tt_um_blink(
     input  wire       clk,      // clock
     input  wire       rst_n     // reset_n - low to reset
 );
+	
      
     // counter register
     reg [7:0] rCounter;
