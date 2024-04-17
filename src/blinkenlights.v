@@ -1,7 +1,15 @@
+`default_nettype none
+
 module tt_um_blink(
-    input clk,rst,
-    output [7:0] q
-    );
+    input  wire [7:0] ui_in,    // Dedicated inputs
+    output wire [7:0] uo_out,   // Dedicated outputs
+    input  wire [7:0] uio_in,   // IOs: Input path
+    output wire [7:0] uio_out,  // IOs: Output path
+    output wire [7:0] uio_oe,   // IOs: Enable path (active high: 0=input, 1=output)
+    input  wire       ena,      // will go high when the design is enabled
+    input  wire       clk,      // clock
+    input  wire       rst_n     // reset_n - low to reset
+);
      
     // counter register
     reg [7:0] rCounter;
@@ -11,7 +19,7 @@ reg [24:0] delay_counter;
 //the delay  counter 
 assign enable = (delay_counter == 25'd24999999) ? 1'b1 : 1'b0;
     // increment or reset the counter
-    always @(negedge clk or posedge rst1 or posedge rst2 or posedge rst3 or posedge rst4 or negedge rst5)
+    always @(posedge clk or negedge rst_n)
     if (rst)
     begin
     delay_counter <= 25'd0;
@@ -27,7 +35,9 @@ assign enable = (delay_counter == 25'd24999999) ? 1'b1 : 1'b0;
 	else delay_counter <= delay_counter + 1'b1;
 	end
  
-    // connect counter register to the output wires
-    assign q = rCounter;
+  // All output pins must be assigned. If not used, assign to 0.
+  assign uo_out  = rCounter 
+  assign uio_out = 0;
+  assign uio_oe  = 0;
 
 endmodule
