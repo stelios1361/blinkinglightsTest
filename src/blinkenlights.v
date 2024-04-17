@@ -40,7 +40,7 @@ assign enable = (delay_counter == 25'd24999999) ? 1'b1 : 1'b0;
 	end
  
   // All output pins must be assigned. If not used, assign to 0.
-  assign uo_out  = rCounter 
+  assign uo_out  = rCounter; 
   assign uio_out = 0;
   assign uio_oe  = 0;
 
